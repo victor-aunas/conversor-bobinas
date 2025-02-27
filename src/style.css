@@ -1,0 +1,94 @@
+:root {
+  --font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --line-height: 1.5;
+  --font-weight: 400;
+
+  /* Cores padrão para tema claro */
+  --background-light: #fcfcfc; /* Fundo claro */
+  --text-color-light: #000000; /* Texto escuro */
+  --highlight-light: #00bcd4; /* Destaques/Links */
+  --button-bg-light: #008c99; /* Cor dos botões */
+  --button-hover-light: #00acc1; /* Cor dos botões ao passar o mouse */
+  --shadow-light: #dcdcdc; /* Sombra */
+
+  /* Cores padrão para tema escuro */
+  --background-dark: #221e4d; /* Fundo escuro */
+  --text-color-dark:black; /* Texto claro */
+  --highlight-dark: #00bcd4; /* Destaques/Links */
+  --button-bg-dark: #007bff; /* Cor dos botões */
+  --button-hover-dark: #0056b3; /* Cor dos botões ao passar o mouse */
+  --shadow-dark: #2c2a55; /* Sombra */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--background-light); /* Cor de fundo claro */
+  color: var(--text-color-light); /* Cor do texto claro */
+  font-family: var(--font-family);
+  transition: background-color 0.3s, color 0.3s; /* Transição suave */
+}
+
+body.dark-theme {
+  background-color: var(--background-dark); /* Cor de fundo escuro */
+  color: var(--text-color-dark); /* Cor do texto claro */
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+a {
+  font-weight: 500;
+  color: var(--highlight-light); /* Cor dos links claro */
+  text-decoration: none; /* Remover sublinhado */
+}
+
+a:hover {
+  color: var(--highlight-light); /* Cor dos links ao passar o mouse */
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  background-color: var(--button-bg-light); /* Cor dos botões */
+  color: #ffffff; /* Cor do texto do botão */
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+button:hover {
+  background-color: var(--button-hover-light); /* Cor dos botões ao passar o mouse */
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.card {
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px var(--shadow-light); /* Sombra do card */
+  background-color: #ffffff; /* Fundo do card */
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; /* Organiza os filhos em coluna */
+  justify-content: center; /* Centraliza o conteúdo */
+  align-items: center; /* Centraliza horizontalmente */
+  box-sizing: border-box;
+  text-align: center;
+}
