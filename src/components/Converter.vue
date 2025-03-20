@@ -1,22 +1,24 @@
 <script setup>
 import { ref } from "vue";
-import { convertToLinearMeters, convertToArea } from "./Calculator"; // Funções de conversão
+import { convertToLinearMeters, convertToArea, calculateLengthByWeight } from "./Calculator"; // Importa funções de conversão
 
 // Definição de variáveis reativas
 const width = ref(""); // Largura da bobina (mm)
 const length = ref(""); // Comprimento da bobina (m)
 const area = ref(null); // Área da bobina (m²)
 const linearMeters = ref(null); // Metros lineares
+const weight = ref(""); // Peso da bobina (kg)
+const grammage = ref(""); // Gramatura do papel (g/m²)
+const calculatedLength = ref(null); // Comprimento calculado pelo peso
 const isConverted = ref(false); // Flag para controlar se a conversão foi realizada
 
 // Função para calcular as conversões
 const handleConvert = () => {
-  if (!width.value || (!length.value && !area.value)) {
+  if (!width.value || (!length.value && !area.value && (!weight.value || !grammage.value))) {
     alert("Por favor, preencha todos os campos necessários.");
     return;
   }
 
-  // Verifica se a conversão é de metros quadrados para metros lineares ou vice-versa
   if (area.value) {
     // Conversão de metros quadrados para metros lineares
     linearMeters.value = convertToLinearMeters(area.value, width.value);
@@ -24,6 +26,10 @@ const handleConvert = () => {
   } else if (length.value) {
     // Conversão de metros lineares para metros quadrados
     area.value = convertToArea(length.value, width.value);
+    isConverted.value = true;
+  } else if (weight.value && grammage.value) {
+    // Cálculo do comprimento com base no peso e gramatura
+    calculatedLength.value = calculateLengthByWeight(weight.value, width.value, grammage.value);
     isConverted.value = true;
   }
 };
@@ -41,6 +47,9 @@ const resetFields = () => {
   length.value = "";
   area.value = null;
   linearMeters.value = null;
+  weight.value = "";
+  grammage.value = "";
+  calculatedLength.value = null;
   isConverted.value = false;
 };
 </script>
@@ -66,6 +75,16 @@ const resetFields = () => {
         <input type="number" v-model="length" @keydown="handleKeyPress" />
       </label>
 
+      <label v-if="!isConverted">
+        Peso da Bobina (kg):
+        <input type="number" v-model="weight" @keydown="handleKeyPress" />
+      </label>
+
+      <label v-if="!isConverted">
+        Gramatura do Papel (g/m²):
+        <input type="number" v-model="grammage" @keydown="handleKeyPress" />
+      </label>
+
       <button @click="handleConvert">Converter</button>
       
       <button v-if="isConverted" @click="resetFields">Limpar</button>
@@ -73,6 +92,7 @@ const resetFields = () => {
       <!-- Resultados -->
       <h2 v-if="linearMeters !== null">Metros Lineares: {{ linearMeters.toFixed(2) }} m</h2>
       <h2 v-if="area !== null">Área: {{ area.toFixed(2) }} m²</h2>
+      <h2 v-if="calculatedLength !== null">Comprimento pelo Peso: {{ calculatedLength.toFixed(2) }} m</h2>
     </div>
   </div>
 </template>
